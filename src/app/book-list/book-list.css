@@ -1,0 +1,32 @@
+
+/* Book list container */
+.book-list {
+  max-width: 750px;
+  margin: 30px auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Book list heading */
+.book-list h2 {
+  color: #234e70;
+}
+
+/* Individual book cards */
+.book {
+  background: #f1f5f9;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border-left: 5px solid #234e70;
+}
+
+/* Book titles */
+.book h3 {
+  color: #234e70;
+  margin-top: 0;
+}
+
+/* Book descriptions */
+.book p {
+  line-height: 1.6;
+}
