@@ -2,12 +2,13 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { Book, BookService } from '../book.service';
 
 @Component({
   selector: 'app-book-list',
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, RouterLink],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
 })
@@ -76,6 +77,7 @@ export class BookList {
   // Clear the form.
   cancelEdit(): void {
     this.editingId = null;
+
     this.newBook = {
       title: '',
       author: '',

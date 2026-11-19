@@ -2,52 +2,14 @@
 <div class="book-list">
   <h2>My Book Browser</h2>
 
-  <!-- Form for adding or editing books -->
-  <h3>{{ editingId === null ? 'Add New Book' : 'Edit Book' }}</h3>
-
-  <form (ngSubmit)="saveBook()">
-    <p>
-      <input
-        type="text"
-        name="title"
-        [(ngModel)]="newBook.title"
-        placeholder="Book Title"
-        required
-      />
-    </p>
-
-    <p>
-      <input
-        type="text"
-        name="author"
-        [(ngModel)]="newBook.author"
-        placeholder="Author"
-        required
-      />
-    </p>
-
-    <p>
-      <textarea
-        name="description"
-        [(ngModel)]="newBook.description"
-        placeholder="Book Description"
-      ></textarea>
-    </p>
-
-    <button type="submit">
-      {{ editingId === null ? 'Add Book' : 'Update Book' }}
-    </button>
-
-    @if (editingId !== null) {
-      <button type="button" (click)="cancelEdit()">
-        Cancel
-      </button>
-    }
-  </form>
+  <!-- Navigate to the Add Book page -->
+  <p>
+    <a routerLink="/add">Add New Book</a>
+  </p>
 
   <h2>All Books</h2>
 
-  <!-- Display books from MySQL -->
+  <!-- Display books retrieved from MySQL -->
   @if (books$ | async; as books) {
     @for (book of books; track book.id) {
       <div class="book">
@@ -55,13 +17,19 @@
         <p><strong>Author:</strong> {{ book.author }}</p>
         <p>{{ book.description }}</p>
 
-        <button type="button" (click)="editBook(book)">
+        <!-- Open the update page for this book -->
+        <a [routerLink]="['/update']"
+           [queryParams]="{ id: book.id }">
           Edit
-        </button>
+        </a>
 
-        <button type="button" (click)="deleteBook(book.id)">
+        &nbsp;&nbsp;
+
+        <!-- Open the delete confirmation page -->
+        <a [routerLink]="['/delete']"
+           [queryParams]="{ id: book.id }">
           Delete
-        </button>
+        </a>
       </div>
     } @empty {
       <p>No books found.</p>

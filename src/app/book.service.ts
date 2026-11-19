@@ -9,6 +9,7 @@ export interface Book {
   title: string;
   author: string;
   description: string;
+  image?: string | null;
 }
 
 @Injectable({
@@ -16,28 +17,40 @@ export interface Book {
 })
 export class BookService {
 
+  // Inject Angular HttpClient.
   private http = inject(HttpClient);
 
-  // PHP API address.
-  private apiUrl = 'http://localhost/AngularApp3API/books.php';
+  // PHP backend API address.
+  private apiUrl =
+    'http://localhost/AngularApp3API/books.php';
 
-  // Retrieve all books.
+  // READ - Retrieve all books from MySQL.
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl);
   }
 
-  // Add a new book.
-  addBook(book: Omit<Book, 'id'>): Observable<any> {
+  // CREATE - Add a book with an optional image.
+  addBook(
+    book: Omit<Book, 'id'> | FormData
+  ): Observable<any> {
     return this.http.post(this.apiUrl, book);
   }
 
-  // Update an existing book.
-  updateBook(id: number, book: Omit<Book, 'id'>): Observable<any> {
-    return this.http.put(`${this.apiUrl}?id=${id}`, book);
+  // UPDATE - Edit an existing book.
+  updateBook(
+    id: number,
+    book: Omit<Book, 'id'>
+  ): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}?id=${id}`,
+      book
+    );
   }
 
-  // Delete a book.
+  // DELETE - Remove a book from MySQL.
   deleteBook(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}?id=${id}`);
+    return this.http.delete(
+      `${this.apiUrl}?id=${id}`
+    );
   }
 }
